@@ -1,0 +1,21 @@
+@model Dojo_League.Models.Ninja
+@{
+    ViewData["Title"] = @Model.Name;
+}
+
+<div class="row mt-5">
+    <div class="col-12">
+        <h1>@Html.DisplayFor(modelItem => @Model.Name)</h1>
+        <h5 class="mt-4">Ninja Level - @Html.DisplayFor(modelItem => @Model.Level)</h5>
+        <h5 class="mt-4">Description: @Html.DisplayFor(modelItem => @Model.Description)</h5>
+        <h5 class="mt-4">Current Dojo: 
+        @{
+            if(@Model.Dojo.DojoId == 0){
+                @Html.DisplayFor(modelItem => @Model.Dojo.Name)
+            }else{
+                <a href="/Dojo/@Model.Dojo.DojoId">@Html.DisplayFor(modelItem => @Model.Dojo.Name)</a>
+            }
+        }
+        </h5>
+    </div>
+</div>

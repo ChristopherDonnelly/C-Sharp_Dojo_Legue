@@ -1,0 +1,51 @@
+﻿@model Dojo_League.Models.DojoBundle
+
+@{
+    ViewData["Title"] = "Dojos";
+}
+
+<div class="row mx-auto">
+    <div class="col-4">
+        <h1 class="my-5">All Dojos</h1>
+        <table class="table table-striped table-bordered table-dark">
+            <thead>
+                <tr>
+                    <th>Dojo Name</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach(Dojo dojo in @Model.Dojos)
+                    {
+                        <tr>
+                            <td class="w-50"><a href="Dojo/@dojo.DojoId" class="text-white"><u>@Html.DisplayFor(modelItem => dojo.Name)</u></a></td>
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-8">
+        <h1 class="my-5">Registered a Dojo</h1>
+        <form asp-controller="League" asp-action="CreateDojo" method="post" class="form-control py-3">
+            <div class="col-12 d-inline-block my-2">
+                <label asp-for="@Model.Dojo.Name" class="d-inline-block col-3 p-0 align-top">Dojo Name: </label>
+                <input asp-for="@Model.Dojo.Name" class="form-control d-inline-block col-8 m-auto" placeholder="Enter Dojo Name" aria-label="Enter Dojo Name" />
+                <span asp-validation-for="@Model.Dojo.Name" class="d-block pl-3 offset-3 text-danger"></span>
+            </div>
+            <div class="col-12 d-inline-block my-2">
+                <label asp-for="@Model.Dojo.Location" class="d-inline-block col-3 p-0 align-top"></label>
+                <input asp-for="@Model.Dojo.Location" class="form-control d-inline-block col-8 m-auto" placeholder="Enter Dojo Location" aria-label="Enter Dojo Location" />
+                <span asp-validation-for="@Model.Dojo.Location" class="d-block pl-3 offset-3 text-danger"></span>
+            </div>
+            <div class="col-12 d-inline-block my-2">
+                <label asp-for="@Model.Dojo.Info" class="d-inline-block col-3 p-0 align-top"></label>
+                <textarea asp-for="@Model.Dojo.Info" class="form-control d-inline-block col-8 m-auto" placeholder="Enter Additional Information" aria-label="Enter Additional Information"></textarea>
+                <span asp-validation-for="@Model.Dojo.Info" class="d-block pl-3 offset-3 text-danger"></span>
+            </div>
+            <div class="row my-2 pr-5 justify-content-end">
+                <button class="btn btn-dark" type="submit">Add Dojo</button>
+            </div>
+        </form>
+    </div>
+</div>

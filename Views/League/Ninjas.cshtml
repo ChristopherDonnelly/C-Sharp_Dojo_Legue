@@ -1,0 +1,83 @@
+﻿@model Dojo_League.Models.NinjaBundle
+
+@{
+    ViewData["Title"] = "Ninjas";
+}
+
+<div class="row mx-auto">
+    <div class="col-6">
+        <h1 class="my-5">Registered Ninjas</h1>
+        <table class="table table-striped table-bordered table-dark">
+            <thead>
+                <tr>
+                    <th>Ninja Name</th>
+                    <th>Home Dojo</th>
+                </tr>
+            </thead>
+            <tbody>
+                @{
+                    foreach(Ninja ninja in @Model.Ninjas)
+                    {
+                        <tr>
+                            <td class="w-50"><a href="Ninja/@ninja.Id" class="text-white"><u>@Html.DisplayFor(modelItem => ninja.Name)</u></a></td>
+                            @{
+                                if(ninja.Dojo.Name == "Rogue"){
+                                    <td>@Html.DisplayFor(modelItem => ninja.Dojo.Name)</td>
+                                }else{
+                                    <td><a href="Dojo/@ninja.DojoId" class="text-white"><u>@Html.DisplayFor(modelItem => ninja.Dojo.Name)</u></a></td>
+                                }
+                            }
+                        </tr>
+                    }
+                }
+            </tbody>
+        </table>
+    </div>
+    <div class="col-6">
+        <h1 class="my-5">Registered a Ninja</h1>
+        <form asp-controller="League" asp-action="CreateNinja" method="post" class="form-control py-3">
+            <div class="col-12 d-inline-block my-2">
+                <label asp-for="@Model.Ninja.Name" class="d-inline-block col-3 p-0 align-top">Ninja Name: </label>
+                <input asp-for="@Model.Ninja.Name" class="form-control d-inline-block col-8 m-auto" placeholder="Enter Ninja Name" aria-label="Enter Ninja Name" />
+                <span asp-validation-for="@Model.Ninja.Name" class="d-block pl-3 offset-3 text-danger"></span>
+            </div>
+            <div class="col-12 d-inline-block my-2">
+                <label asp-for="@Model.Ninja.Level" class="d-inline-block col-3 p-0 align-top"></label>
+                <select asp-for="@Model.Ninja.Level" class="form-control d-inline-block col-2 m-auto">
+                    <option value="-" selected hidden disabled> - </option>
+                    @{
+                        for (int i = 1; i <= 10; i++)
+                        {
+                            <option value="@i">@i</option>
+                        }
+                    }
+                </select>
+                <span asp-validation-for="@Model.Ninja.Level" class="d-block pl-3 offset-3 text-danger"></span>
+            </div>
+            <div class="col-12 d-inline-block my-2">
+                <label asp-for="@Model.Ninja.DojoId" class="d-inline-block col-3 p-0 align-top"></label>
+                <select asp-for="@Model.Ninja.DojoId" class="form-control d-inline-block col-8 m-auto">
+                    @{
+                        foreach(Dojo dojo in @Model.Dojos)
+                        {
+                            if(@dojo.Name == "Rogue"){
+                                <option value="@dojo.DojoId" selected>@dojo.Name</option>
+                            }else{
+                                <option value="@dojo.DojoId">@dojo.Name</option>
+                            }
+                        }
+                    }
+                </select>
+                <span asp-validation-for="@Model.Ninja.DojoId" class="d-block pl-3 offset-3 text-danger"></span>
+            </div>
+            <div class="col-12 d-inline-block my-2">
+                <label asp-for="@Model.Ninja.Description" class="d-inline-block col-3 p-0 align-top"></label>
+                <textarea asp-for="@Model.Ninja.Description" class="form-control d-inline-block col-8 m-auto" placeholder="Enter Description" aria-label="Enter Description"></textarea>
+                <span asp-validation-for="@Model.Ninja.Description" class="d-block pl-3 offset-3 text-danger"></span>
+            </div>
+            <div class="row my-2 pr-5 justify-content-end">
+                <button class="btn btn-dark" type="submit">Add Ninja</button>
+            </div>
+        </form>
+    </div>
+</div>
